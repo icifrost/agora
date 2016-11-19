@@ -2,7 +2,7 @@
 session_start();
 // Start a session
 define("ADMIN_IS_INCLUDED", true);// Defines the variable that controls direct
-require_once ('../configuration.php');
+require_once ('configuration.php');
 date_default_timezone_set("Africa/Lusaka");
 $loginmessage = '';
 $userStatus = 0;
