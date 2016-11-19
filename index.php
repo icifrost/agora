@@ -1,4 +1,29 @@
-<!DOCTYPE html>
+<?php 
+session_start();
+// Start a session
+define("ADMIN_IS_INCLUDED", true);// Defines the variable that controls direct
+require_once ('db_connect.php');
+date_default_timezone_set("Africa/Lusaka");
+$loginmessage = '';
+$userStatus = 0;
+if(isset($_POST['login'])){
+	include 'login.php';
+}
+
+if(isset($_SESSION['manage'])){
+	$user=$_SESSION['manage'];
+	$selectuser="SELECT * from account, staff where account.account_id='$user' and staff.account_id = account.account_id";
+	$selectuser2=mysqli_query($selectuser);
+	$selectuser3=mysqli_fetch_array($selectuser2);
+	$fullname = $selectuser3['first_name']." ".$selectuser3['last_name'];
+	$userStatus = 0;
+	if($selectuser3){
+		$userStatus = 3;
+	}
+
+}
+
+?><!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="utf-8">
   <title>Agora Code Community | Lusaka, Zambia</title>
@@ -325,7 +350,7 @@
             <div class="col-sm-6 b-r">
               <h3 class="m-t-none m-b">Sign in</h3>
               <p>Sign in to meet your friends.</p>
-              <form role="form">
+              <form role="form" method="post">
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" class="form-control" placeholder="Enter email">
