@@ -41,7 +41,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#pricing" class="scroll">Pricing</a></li>
-            <li><a href="#">Sign in</a></li>
+            <li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
@@ -257,7 +257,46 @@
         </div>
         
       </div>
+
     </footer>
+        <div class="modal fade" id="modal-form">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body wrapper-lg">
+          <div class="row">
+            <div class="col-sm-6 b-r">
+              <h3 class="m-t-none m-b">Sign in</h3>
+              <p>Sign in to meet your friends.</p>
+              <form role="form">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="checkbox m-t-lg">
+                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>                
+              </form>
+            </div>
+            <div class="col-sm-6">
+              <h4>Not a member?</h4>
+              <p>You can create an account <a href="#" class="text-info">here</a></p>
+              <p>OR</p>
+              <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
+              <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
+              <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google-plus pull-left"></i>Sign in with Google+</a>
+            </div>
+          </div>          
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
     
     
     <!-- Javascript
@@ -268,6 +307,70 @@
     <script src="js/wow.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="js/bootstrap.js"></script>
+  <!-- App -->
+  <script src="js/app.js"></script>  
+  <script src="js/slimscroll/jquery.slimscroll.min.js"></script>
+    <div class="modal fade" id="modal-form">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body wrapper-lg">
+          <div class="row">
+            <div class="col-sm-6 b-r">
+              <h3 class="m-t-none m-b">Sign in</h3>
+              <p>Sign in to meet your friends.</p>
+              <form role="form">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="checkbox m-t-lg">
+                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>                
+              </form>
+            </div>
+            <div class="col-sm-6">
+              <h4>Not a member?</h4>
+              <p>You can create an account <a href="#" class="text-info">here</a></p>
+              <p>OR</p>
+              <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
+              <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
+              <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google-plus pull-left"></i>Sign in with Google+</a>
+            </div>
+          </div>          
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+  <!-- datepicker -->
+  <script src="js/datepicker/bootstrap-datepicker.js"></script>
+  <!-- slider -->
+  <script src="js/slider/bootstrap-slider.js"></script>
+  <!-- file input --> 
+  <script src="js/file-input/bootstrap-filestyle.min.js"></script>
+  <!-- wysiwyg -->
+  <script src="js/wysiwyg/jquery.hotkeys.js"></script>
+  <script src="js/wysiwyg/bootstrap-wysiwyg.js"></script>
+  <script src="js/wysiwyg/demo.js"></script>
+  <!-- markdown -->
+  <script src="js/markdown/epiceditor.min.js"></script>
+  <script src="js/markdown/demo.js"></script>
+
+  <script src="js/chosen/chosen.jquery.min.js"></script>
+  <script src="js/app.plugin.js"></script>
+  <script type="text/javascript" src="js/jPlayer/jquery.jplayer.min.js"></script>
+  <script type="text/javascript" src="js/jPlayer/add-on/jplayer.playlist.min.js"></script>
+  <script type="text/javascript" src="js/jPlayer/demo.js"></script
 
    
     </body>
