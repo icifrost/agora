@@ -54,7 +54,7 @@
             <a href="index.html"><img src="img/logo.svg" alt="Logo"></a>
           </div>
           <div class="col-xs-6 signin text-right navbar-nav">
-            <a href="#pricing" class="scroll">Pricing</a>&nbsp; &nbsp;<a href="#">Sign in</a>
+            <a href="#pricing" class="scroll">Pricing</a>&nbsp; &nbsp;<a href="#modal-form" data-toggle="modal">Sign in</a>
           </div>
         </div>
         

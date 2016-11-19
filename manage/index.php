@@ -4,6 +4,25 @@ session_start();
 define("ADMIN_IS_INCLUDED", true);// Defines the variable that controls direct
 require_once ('../configuration.php');
 date_default_timezone_set("Africa/Lusaka");
+$loginmessage = '';
+$userStatus = 0;
+if(isset($_POST['login'])){
+	include 'login.php';
+}
+
+if(isset($_SESSION['manage'])){
+	$user=$_SESSION['manage'];
+	$selectuser="SELECT * from account, staff where account.account_id='$user' and staff.account_id = account.account_id";
+	$selectuser2=mysqli_query($selectuser);
+	$selectuser3=mysqli_fetch_array($selectuser2);
+	$fullname = $selectuser3['first_name']." ".$selectuser3['last_name'];
+	$userStatus = 0;
+	if($selectuser3){
+		$userStatus = 3;
+	}
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="">
