@@ -36,7 +36,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="logo" href="index.html"><img src="img/agora_logo_alt.png" alt="Logo"></a>
+          <a class="logo" href="index.html"><img src="img/_agora_logo_alt.png" alt="Logo"></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -52,7 +52,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-6">
-            <a href="index.html"><img src="img/agora_logo.png" alt="Logo"></a>
+            <a href="index.html"><img src="img/_agora_logo.png" alt="Logo"></a>
           </div>
           <div class="col-xs-6 signin text-right navbar-nav">
             <a href="#about" class="scroll">About</a> &nbsp;&nbsp;
@@ -64,10 +64,9 @@
 
         <div class="row header-info">
           <div class="col-sm-10 col-sm-offset-1 text-center">
-            <h1 class="wow fadeIn">My Name is Brenda</h1>
+            <h1 class="wow fadeIn">Welcome to Agora Code Community!</h1>
             <br />
-            <p class="lead wow fadeIn" data-wow-delay="0.5s">Lorem ipsum dolor sit amet, consectetur adipis. <br>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit sit dol mi arlna.</p>
+            <p class="lead wow fadeIn" data-wow-delay="0.5s">where coders come together to share resources and teach each other code. It's also platform to network and connect with other coders.</p>
             <br />
 
             <div class="row">
