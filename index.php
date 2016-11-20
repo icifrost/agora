@@ -23,8 +23,8 @@ if(isset($_POST['login'])){
 if(isset($_SESSION['member'])){
 	$user=$_SESSION['member'];
 	$selectuser="SELECT * from account, staff where account.account_id='$user' and staff.account_id = account.account_id";
-	$selectuser2=pg_query($dbconn, $selectuser);
-	$selectuser3=pg_fetch_array($selectuser2);
+	$selectuser2=mysqli_query($dbconn, $selectuser);
+	$selectuser3=mysqli_fetch_array($selectuser2);
 	$userStatus = 0;
 	if($selectuser3){
 		$userStatus = 3;
@@ -67,7 +67,7 @@ if(isset($_SESSION['member'])){
   <link rel="stylesheet" href="css/bootstrap.min.css">
   
   <?php 
-  if(!isset($_GET['page'])){
+  if(!isset($_GET['page']) && !isset($_SESSION['member'])){
   	echo '<link rel="stylesheet" href="css/main.css">';
   }
   ?>
@@ -79,8 +79,6 @@ if(isset($_SESSION['member'])){
 </head>
 
 <body>
-
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -94,27 +92,81 @@ if(isset($_SESSION['member'])){
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about" class="scroll">About</a></li>
-            <li><a href="./jobs" class="scroll">Jobs</a></li> 
-            <li><a href="./forum" class="scroll">Forum</a></li>
-            <li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
+            <li><a href="?page=forum/index">Forum</a></li>
+            <li><a href="?page=events">Events</a></li>
+            <li><a href="?page=jobs">Jobs</a></li> 
+            <?php if(isset($_SESSION['member'])){
+            	$user=$_SESSION['member'];
+            	$getuser="SELECT * from account, client where account.account_id='$user' and account.account_id = client.account_id";
+            	$getuser2=mysqli_query($dbconn,$getuser) or die("Could not get user info");
+            	$getuser3=mysqli_fetch_array($getuser2);
+            	$username = $getuser3['username'];
+            	$fullname = $getuser3['first_name'].' '.$getuser3['last_name'];
+            	$regDate = date('Y-m-d H:i:s', $getuser3['registration_date']);
+            	
+            	$email = $getuser3['email'];
+            	
+            	$oldDate = new DateTime($regDate);
+            	
+            	$curDate = mktime(Date('H'),Date('i'),Date('s'),Date('m'),Date('d'),Date('Y'));
+            	$curDate = new DateTime(date('Y-m-d H:i:s', $curDate));
+            	
+            	$difference = $oldDate->diff($curDate);
+            	
+            	$timePassed = $difference->y.' years, '.$difference->m.' months, '.$difference->d.' days';
+            	?>
+            	<li>
+            <a href="#" class="dropdown-toggle bg clear" data-toggle="dropdown">
+              <i class="icon-user"></i>
+              Hi <?php echo $username; ?> <b class="caret"></b>
+            </a>
+            <section class="dropdown-menu aside-xl animated fadeInUp">
+              <section class="panel bg-white">
+                <div class="panel-heading b-light bg-light">
+                  <strong><i class="icon-user"></i> Your Account</strong>
+                </div>
+                <div class="m-lg">
+                <p><b>CUSTOMER: &emsp;&emsp;</b><?php echo $fullname; ?><br/>
+                <b>USERNAME: &emsp;&emsp;</b><?php echo $username; ?><br/>
+                <b>SUPPORT PIN: &emsp;&emsp;</b><?php echo ""; ?></p>
+
+                    <hr/>
+                    
+<a style="color: gray;" href="?page=dashboard&username=<?php echo $user; ?>">Dashboard</a><br/>
+<a style="color: gray;" href="?page=profile/personal_info">Profile</a><br/>
+<a style="color: gray;" href="?logout"><i class="fa fa-sign-out"></i> Logout</a><br/>
+
+                </div>
+              </section>
+            </section>
+          </li>
+          <li><a href="?logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+            	<?php
+			}else{
+            	?>
+            	<li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
+            	<?php
+            }
+            	
+            	?>
+            
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-
     
 
     <div class="mouse-icon hidden-xs">
 				<div class="scroll"></div>
 			</div>
 			<?php
-			if (isset($_SESSION['member'])):
+			if (isset($_SESSION['member']) && !isset($_GET['page'])):
         		?>
         		<?php
         			include "dashboard.php";
         			?>
 			<?php
-        		elseif(!isset($_GET['page'])):
+        		elseif(!isset($_GET['page']) && !isset($_SESSION['member'])):
         			include "frontpage.php";
         		else:
         		
@@ -145,15 +197,14 @@ if(isset($_SESSION['member'])){
           <div class="col-sm-8 margin-20">
             <ul class="list-inline social">
               <li>Connect with us on</li>
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+              <li><a href="https://twitter.com/CodeAgora" target="_blank"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="https://www.facebook.com/agoracodecomm" target="_blank"><i class="fa fa-facebook"></i></a></li>
             </ul>
           </div>
 
           <div class="col-sm-4 text-right">
-            <p><small>Copyright &copy; 2014. All rights reserved. <br>
-	            Created by <a href="http://visualsoldiers.com">Visual Soldiers</a></small></p>
+            <p><small>Copyright &copy; <?php echo date('Y'); ?>. All rights reserved. <br>
+	            Created by <a href="http://agora.icifrost.me">The Agora Code Community</a></small></p>
           </div>
         </div>
 
@@ -185,17 +236,17 @@ if(isset($_SESSION['member'])){
             <div class="col-sm-6 b-r">
               <h3 class="m-t-none m-b">Sign in</h3>
               <p>Sign in to meet your friends.</p>
-              <form role="form" method="post">
+              <form action='index.php' role="form" method="post">
                 <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" class="form-control" placeholder="Enter email">
+                  <label>Username</label>
+                  <input type='text' name='username' class="form-control" placeholder="Enter username">
                 </div>
                 <div class="form-group">
                   <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" class="form-control" placeholder="Password" name='password' value=''>
                 </div>
                 <div class="checkbox m-t-lg">
-                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
+                  <button type="submit" name='login' class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
                   <label>
                     <input type="checkbox"> Remember me
                   </label>
@@ -204,7 +255,7 @@ if(isset($_SESSION['member'])){
             </div>
             <div class="col-sm-6">
               <h4>Not a member?</h4>
-              <p>You can create an account <a href="#model-reg-form" class="text-info">here</a></p>
+              <p>You can create an account <a href="?page=member&signup" class="text-info">here</a></p>
               <p>OR</p>
               <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
               <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
@@ -215,50 +266,11 @@ if(isset($_SESSION['member'])){
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div>
-  <!--regitration form -->
-  <script src="js/slimscroll/jquery.slimscroll.min.js"></script>
-    <div class="modal fade" id="model-reg-form">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body wrapper-lg">
-          <div class="row">
-            <div class="col-sm-6 b-r">
-              <h3 class="m-t-none m-b">Sign up</h3>
-              <p>Sign up to meet your friends.</p>
-              <form role="form" method="post">
-              <div class="form-group">
-                  <label>First-Name</label>
-                  <input type="text" class="form-control" placeholder="Your first name">
-                </div>
-                <div class="form-group">
-                <label>Second-Name</label>
-                  <input type="text" class="form-control" placeholder="Your second name">
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" class="form-control" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <label>Confim-Password</label>
-                  <input type="password" class="form-control" placeholder="Confirm-Password">
-                </div>
-                <div class="checkbox m-t-lg">
-                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Submit</strong></button>
-                  <label>
-                    <input type="checkbox"> Remember me
-                  </label>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
+  
+  <!-- parsley -->
+<script src="js/parsley/parsley.min.js"></script>
+<script src="js/parsley/parsley.extend.js"></script>
+  
   <!-- datepicker -->
   <script src="js/datepicker/bootstrap-datepicker.js"></script>
   <!-- slider -->
