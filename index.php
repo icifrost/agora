@@ -1,28 +1,9 @@
-<?php 
-session_start();
-// Start a session
-define("ADMIN_IS_INCLUDED", true);// Defines the variable that controls direct
-require_once ('db_connect.php');
-date_default_timezone_set("Africa/Lusaka");
-$loginmessage = '';
-$userStatus = 0;
-if(isset($_POST['login'])){
-	include 'login.php';
+<?php
+include('login.php'); // Includes Login Script
+
+if(isset($_SESSION['login_user'])){
+header("location: dashboard.php");
 }
-
-if(isset($_SESSION['manage'])){
-	$user=$_SESSION['manage'];
-	$selectuser="SELECT * from account, staff where account.account_id='$user' and staff.account_id = account.account_id";
-	$selectuser2=mysqli_query($selectuser);
-	$selectuser3=mysqli_fetch_array($selectuser2);
-	$fullname = $selectuser3['first_name']." ".$selectuser3['last_name'];
-	$userStatus = 0;
-	if($selectuser3){
-		$userStatus = 3;
-	}
-
-}
-
 ?><!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="utf-8">
@@ -66,7 +47,7 @@ if(isset($_SESSION['manage'])){
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about" class="scroll">About</a></li>
-            <li><a href="#jobs" class="scroll">Jobs</a></li> <li><a href="#forums" class="scroll">Forums</a></li>
+            <li><a href="jobportal/index.html">Jobs</a></li> <li><a href="#forums" class="scroll">Forums</a></li>
             <li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
@@ -82,7 +63,7 @@ if(isset($_SESSION['manage'])){
           <div class="col-xs-6 signin text-right navbar-nav">
             <a href="#about" class="scroll">About</a> &nbsp;&nbsp;
             <a href="#forums" class="scroll">Forums</a> &nbsp;&nbsp;
-            <a href="#jobs" class="scroll">Jobs</a> &nbsp;&nbsp;
+            <a href="jobportal/index.html">Jobs</a> &nbsp;&nbsp;
             <a href="#modal-form" data-toggle="modal">Sign in</a>
           </div>
         </div>
@@ -350,7 +331,7 @@ if(isset($_SESSION['manage'])){
             <div class="col-sm-6 b-r">
               <h3 class="m-t-none m-b">Sign in</h3>
               <p>Sign in to meet your friends.</p>
-              <form role="form" method="post">
+              <form role="form" action="" method="post">
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" class="form-control" placeholder="Enter email">
@@ -360,11 +341,12 @@ if(isset($_SESSION['manage'])){
                   <input type="password" class="form-control" placeholder="Password">
                 </div>
                 <div class="checkbox m-t-lg">
-                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
+                  <button type="submit"  value=" Login "><strong>Log in</strong></button>
                   <label>
                     <input type="checkbox"> Remember me
                   </label>
                 </div>
+                <span><?php echo $error; ?></span>
               </form>
             </div>
             <div class="col-sm-6">
