@@ -12,8 +12,8 @@ if(isset($_POST['register']))
 		$bademail=0; //trackers for banned e-mails
 		$email=trim(strip_tags($_POST['email']));
 		$getbademails="SELECT * from banemails";
-		$getbademails2=pg_query($dbconn, $getbademails) or die("Could not grab bad emails");
-		while($getbademails3=pg_fetch_array($getbademails2))
+		$getbademails2=mysqli_query($dbconn, $getbademails) or die("Could not grab bad emails");
+		while($getbademails3=mysqli_fetch_array($getbademails2))
 		{
 			if(substr_count($email,$getbademails3['email'])>0)
 			{
@@ -29,8 +29,8 @@ if(isset($_POST['register']))
 		$password=strip_tags(trim($_POST['password']));
 		$pass2=$_POST['pass2'];
 		$usercheck="SELECT * from account where username='$username' or email='$email'";
-		$usercheck2=pg_query($dbconn, $usercheck);
-		while ($usercheck3=pg_fetch_array($usercheck2))
+		$usercheck2=mysqli_query($dbconn, $usercheck);
+		while ($usercheck3=mysqli_fetch_array($usercheck2))
 		{
 			$valid=0;
 		}
@@ -62,50 +62,50 @@ if(isset($_POST['register']))
 					$nl = 1;
 					$values = 'values ("'.$email.'", "yes")';
 					$insert ="INSERT into subscribe(email_address, subscribed) ".$values;
-					pg_query($dbconn, $insert) or die(pg_errormessage($dbconn));
+					mysqli_query($dbconn, $insert) or die(mysqli_error($dbconn));
 				}  else {
 					$nl = 0;
 				}
 				$SQL ="INSERT into account (username, password, first_name, last_name, email)
 				values('$username','$password','$firstname','$lastname','$email')";
-				pg_query($dbconn, $SQL) or die(pg_errormessage($dbconn));
+				mysqli_query($dbconn, $SQL) or die(mysqli_error($dbconn));
 				
 				$queryuser = "select * from account where username='$username'";
-				$resultuser = pg_query($dbconn, $queryuser) or die("Could not query") ;
+				$resultuser = mysqli_query($dbconn, $queryuser) or die("Could not query") ;
 				//$result2=pg_num_rows($result);
-				$resultuser2=pg_fetch_array($resultuser);
+				$resultuser2=mysqli_fetch_array($resultuser);
 				
 				$account_id = $resultuser2['account_id'];
 				
 				//Create Client
 				$SQL ="INSERT into client (account_id, validated, keynode, validation_reminder, registration_date, funds)
 				values('$account_id','0','$key','3','$todayTimestamp','0.00')";
-				pg_query($dbconn, $SQL) or die(pg_errormessage($dbconn));
+				mysqli_query($dbconn, $SQL) or die(mysqli_error($dbconn));
 				
 				echo'<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert">x</button>
-							<strong>Well done!</strong> Registration completed please check your email for activation key. Go here to <a href="?page=signin">Login</a>.
+							<strong>Well done!</strong> Registration completed please check your email for activation key. Go here to <a href="#modal-form" data-toggle="modal">Login</a>.
 						</div>';
 				
 				
 				
 				$to = $email;
-				$subject = 'Your Mwanta activation key';
+				$subject = 'Your Agora Code Community activation key';
 				
 				// Compose a simple HTML email message
 				$message = '<html><body>';
 				$message .= '<h1 style="color:#f40;">Dear '.$firstname.' '.$lastname.',</h1>';
 				$message .= '<p style="color:#080;font-size:18px;">In order to serve you better,
-		An account has been created for you at <a href="www.mwanta.com">www.mwanta.com</a>.</p>';
+		An account has been created for you at <a href="www.agora.icifrost.me">www.agora.icifrost.me</a>.</p>';
 				$message .= '<p style="color:#080;font-size:18px;">
-						<a href="http://www.mwanta.com/index.php?page=member&activate&username='.$username.'&keynode='.$key.'">
+						<a href="http://www.agora.icifrost.me/index.php?page=member&activate&username='.$username.'&keynode='.$key.'">
 						Click Here</a> To activate your account or copy and paste the following 
 						URL in your browser<br/>
-				<a href="http://www.mwanta.com/index.php?page=member&activate&username='.$username.'&keynode='.$key.'">
-						http://www.mwanta.com/index.php?page=member&activate&username='.$username.'&keynode='.$key.'</a></p>';
+				<a href="http://www.agora.icifrost.me/index.php?page=member&activate&username='.$username.'&keynode='.$key.'">
+						http://www.agora.icifrost.me/index.php?page=member&activate&username='.$username.'&keynode='.$key.'</a></p>';
 				$message .= '<p style="color:#080;font-size:18px;"> Regards, <br/>
 		Team Mwanta <br/>
-		<a href="www.mwanta.com">www.mwanta.com</a>
+		<a href="www.agora.icifrost.me">www.agora.icifrost.me</a>
 		</p>';
 				$message .= '</body></html>';
 				
@@ -122,7 +122,7 @@ if(isset($_POST['register']))
 						</div>';
 				}
 				
-				mail("admin@mwanta.com","Registration at ".CMSConfig::$sitename."","This is just to inform you that $username has just registered in your forums");
+				mail("admin@mwanta.com","Registration at Agora Code Community Website","This is just to inform you that $username has just registered on agora.icifrost.me");
 		}
 }else{
 ?>
@@ -209,13 +209,13 @@ elseif (isset($_GET['activate'])):
 $username=strip_tags($_GET['username']);
 $keynode=strip_tags($_GET['keynode']);
 $getuserkeys="Select * from account, client where account.username='$username' and client.keynode='$keynode' and account.account_id = client.account_id";
-$getuserkeys2=pg_query($dbconn, $getuserkeys) or die(pg_errormessage($dbconn));
-$getuserkeys3=pg_fetch_array($getuserkeys2);
+$getuserkeys2=mysqli_query($dbconn, $getuserkeys) or die(mysqli_error($dbconn));
+$getuserkeys3=mysqli_fetch_array($getuserkeys2);
 if($getuserkeys3)
 {
 	$account_id = $getuserkeys3['account_id'];
   	$update="Update client set validated='1' where account_id='$account_id'";
-  	pg_query($update) or die("Could not activate");
+  	mysqli_query($update) or die("Could not activate");
   	echo'<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert">x</button>
 							<strong>Well done!</strong> Account activated.
@@ -232,8 +232,8 @@ elseif (isset($_GET['profile'])):
 
 $user=$_SESSION['member'];
 $getuser="SELECT * from users where username='$user'";
-$getuser2=pg_query($dbconn, $getuser) or die("Could not get user info");
-$getuser3=pg_fetch_array($getuser2);
+$getuser2=mysqli_query($dbconn, $getuser) or die("Could not get user info");
+$getuser3=mysqli_fetch_array($getuser2);
 if(isset($_POST['submit']))
 {
 	$password=$_POST['password'];
@@ -250,7 +250,7 @@ if(isset($_POST['submit']))
 			];
 			$password = password_hash($password, PASSWORD_BCRYPT, $options);
 			$cp="Update users set password='$password', email='$email',location='$location' where username='$user'";
-			pg_query($dbconn, $cp) or die("not1");
+			mysqli_query($dbconn, $cp) or die("not1");
 		}
 		else if(strlen($email)<4 || substr_count($email," ")>0)
 		{
@@ -259,7 +259,7 @@ if(isset($_POST['submit']))
 		else
 		{
 			$cp="Update users set email='$email',location='$location' where username='$user'";
-			pg_query($dbconn, $cp) or die(pg_errormessage($dbconn));
+			mysqli_query($dbconn, $cp) or die(mysqli_error($dbconn));
 		}
 		print "<div class='valid_box'>
       <b>User CP</b><br/>
@@ -286,8 +286,8 @@ else
 {
 	print "From here you can change your password<br><br>";
 	$userselect="SELECT*from users where username='$user'";
-	$userselect2=pg_query($dbconn, $userselect);
-	$userselect3=pg_fetch_array($userselect2);
+	$userselect2=mysqli_query($dbconn, $userselect);
+	$userselect3=mysqli_fetch_array($userselect2);
 	print "<form action='?page=member&profile' method='post'>";
 	print "<input type='hidden' name='username' value='$userselect3[username]'><br>";
 	print "Password:<br><input type='password' name='password'><br>";

@@ -1,9 +1,37 @@
-<?php
-include('login.php'); // Includes Login Script
+<?php 
+session_start();
+// Start a session
+define("IS_INCLUDED", true);// Defines the variable that controls direct
+require_once ('configuration.php');
+date_default_timezone_set("Africa/Lusaka");
+$loginmessage = '';
 
-if(isset($_SESSION['login_user'])){
-header("location: dashboard.php");
+if(isset($_GET['logout'])){
+	$_SESSION['member']=null;
+	session_destroy();
+	$loginmessage = '<div class="alert alert-success">
+							<strong>Well done!</strong> You have successfully logged out...
+						</div>';
 }
+
+$userStatus = 0;
+
+if(isset($_POST['login'])){
+	include "login.php";
+}
+
+if(isset($_SESSION['member'])){
+	$user=$_SESSION['member'];
+	$selectuser="SELECT * from account, staff where account.account_id='$user' and staff.account_id = account.account_id";
+	$selectuser2=pg_query($dbconn, $selectuser);
+	$selectuser3=pg_fetch_array($selectuser2);
+	$userStatus = 0;
+	if($selectuser3){
+		$userStatus = 3;
+	}
+
+}
+
 ?><!DOCTYPE html>
 <html lang="en"><head>
   <meta charset="utf-8">
@@ -19,15 +47,34 @@ header("location: dashboard.php");
 	<meta property="og:description" content="">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/animate.css">
   <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900|Montserrat:400,700' rel='stylesheet' type='text/css'>
+  
+  <link rel="stylesheet" type="text/css" media="screen, projection" href="style.css" />
+  <link rel="icon" type="image/gif" href="favicon.png" />
+  <link rel="stylesheet" href="js/jPlayer/jplayer.flat.css" type="text/css" />
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+  <link rel="stylesheet" href="css/font.css" type="text/css" />
+  <link rel="stylesheet" href="css/app.css" type="text/css" />  
+    <link rel="stylesheet" href="js/datepicker/datepicker.css" type="text/css" />
+<link rel="stylesheet" href="js/slider/slider.css" type="text/css" />
+<link rel="stylesheet" href="js/chosen/chosen.css" type="text/css" />
+<link rel="stylesheet" href="js/datatables/datatables.css" type="text/css"/> 
 
 
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  
+  <?php 
+  if(!isset($_GET['page'])){
+  	echo '<link rel="stylesheet" href="css/main.css">';
+  }
+  ?>
 
   <script src="js/modernizr-2.7.1.js"></script>
+  
+  <script src="js/jquery.min.js"></script>  
 
 </head>
 
@@ -42,210 +89,55 @@ header("location: dashboard.php");
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="logo" href="index.html"><img src="img/_agora_logo_alt.png" alt="Logo"></a>
+          <a class="logo" href="./"><img src="img/_agora_logo_alt.png" alt="Logo"></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about" class="scroll">About</a></li>
-            <li><a href="jobportal/index.html">Jobs</a></li> <li><a href="#forums" class="scroll">Forums</a></li>
+            <li><a href="./jobs" class="scroll">Jobs</a></li> 
+            <li><a href="./forum" class="scroll">Forum</a></li>
             <li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
 
-    <header>
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-6">
-            <a href="index.html"><img src="img/_agora_logo.png" alt="Logo"></a>
-          </div>
-          <div class="col-xs-6 signin text-right navbar-nav">
-            <a href="#about" class="scroll">About</a> &nbsp;&nbsp;
-            <a href="#forums" class="scroll">Forums</a> &nbsp;&nbsp;
-            <a href="jobportal/index.html">Jobs</a> &nbsp;&nbsp;
-            <a href="#modal-form" data-toggle="modal">Sign in</a>
-          </div>
-        </div>
-
-        <div class="row header-info">
-          <div class="col-sm-10 col-sm-offset-1 text-center">
-            <h1 class="wow fadeIn">Welcome to Agora Code Community!</h1>
-            <br />
-            <p class="lead wow fadeIn" data-wow-delay="0.5s">where coders come together to share resources and teach each other code. It's also platform to network and connect with other coders.</p>
-            <br />
-
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-                <div class="row">
-                  <div class="col-xs-6 text-right wow fadeInUp" data-wow-delay="1s">
-                    <a href="#about" class="btn btn-secondary btn-lg scroll">Learn More</a>
-                  </div>
-                  <div class="col-xs-6 text-left wow fadeInUp" data-wow-delay="1.4s">
-                    <a href="#invite" class="btn btn-primary btn-lg scroll">Request Invite</a>
-                  </div>
-                </div><!--End Button Row-->
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </header>
+    
 
     <div class="mouse-icon hidden-xs">
 				<div class="scroll"></div>
 			</div>
-
-    <section id="about" class="pad-xl">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2 text-center margin-30 wow fadeIn" data-wow-delay="0.6s">
-            <h2>Be the first</h2>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipis.</p>
-          </div>
-        </div>
-
-        <div class="iphone wow fadeInUp" data-wow-delay="1s">
-	        <img src="img/iphone.png">
-        </div>
-      </div>
-    </section>
-
-    <section id="main-info" class="pad-xl">
-	    <div class="container">
-		    <div class="row">
-			    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.4s">
-				    <hr class="line purple">
-				    <h3>App Feature One Here</h3>
-				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
-			    </div>
-			    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.8s">
-				    <hr  class="line blue">
-				    <h3>App Feature One Here</h3>
-				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
-			    </div>
-			    <div class="col-sm-4 wow fadeIn" data-wow-delay="1.2s">
-				    <hr  class="line yellow">
-				    <h3>App Feature One Here</h3>
-				    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
-			    </div>
-		    </div>
-	    </div>
-    </section>
-
-
-    <!--Pricing-->
-    <section id="pricing" class="pad-lg">
-      <div class="container">
-        <div class="row margin-40">
-          <div class="col-sm-8 col-sm-offset-2 text-center">
-            <h2 class="white">Pricing</h2>
-            <p class="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.</p>
-          </div>
-        </div>
-
-        <div class="row margin-50">
-
-          <div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="1s">
-            <br />
-            <ul class="list-unstyled pricing-table text-center">
-    					<li class="headline"><h5 class="white">Personal</h5></li>
-    					<li class="price"><div class="amount">$5<small>/m</small></div></li>
-    					<li class="info">2 row section for you package information. You can include all details or icons</li>
-    					<li class="features first">Up To 25 Projects</li>
-    					<li class="features">10GB Storage</li>
-    					<li class="features">Other info</li>
-    					<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-    				</ul>
-          </div>
-
-          <div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="0.4s">
-            <ul class="list-unstyled pricing-table active text-center">
-    					<li class="headline"><h5 class="white">Professional</h5></li>
-    					<li class="price"><div class="amount">$12<small>/m</small></div></li>
-    					<li class="info">2 row section for you package information. You can include all details or icons</li>
-    					<li class="features first">Up To 25 Projects</li>
-    					<li class="features">10GB Storage</li>
-    					<li class="features">Other info</li>
-    					<li class="features">Other info</li>
-    					<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-    				</ul>
-          </div>
-
-          <div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="1.3s">
-            <br />
-            <ul class="list-unstyled pricing-table text-center">
-    					<li class="headline"><h5 class="white">Business</h5></li>
-    					<li class="price"><div class="amount">$24<small>/m</small></div></li>
-    					<li class="info">2 row section for you package information. You can include all details or icons</li>
-    					<li class="features first">Up To 25 Projects</li>
-    					<li class="features">10GB Storage</li>
-    					<li class="features">Other info</li>
-    					<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-    				</ul>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <section id="invite" class="pad-lg light-gray-bg">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-8 col-sm-offset-2 text-center">
-            <i class="fa fa-envelope-o margin-40"></i>
-            <h2 class="black">Get the invite</h2>
-            <br />
-            <p class="black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.</p>
-            <br />
-
-            <div class="row">
-              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                <form role="form">
-                  <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-lg">Request Invite</button>
-                </form>
-              </div>
-            </div><!--End Form row-->
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section id="press" class="pad-sm">
-      <div class="container">
-
-        <div class="row margin-30 news-container">
-          <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 wow fadeInLeft" data-wow-delay="0.8s">
-            <a href="#" target="_blank">
-            <img class="news-img pull-left" src="img/press-01.jpg" alt="Tech Crunch">
-            <p class="black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.<br />
-            <small><em>Tech Crunch - January 15, 2015</em></small></p>
-            </a>
-          </div>
-        </div>
-
-        <div class="row margin-30 news-container">
-          <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 wow fadeInLeft" data-wow-delay="1.2s">
-            <a href="#" target="_blank">
-            <img class="news-img pull-left" src="img/press-02.jpg" alt="Forbes">
-            <p class="black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut. <br />
-            <small><em>Forbes - Feb 25, 2015</em></small></p>
-            </a>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
+			<?php
+			if (isset($_SESSION['member'])):
+        		?>
+        		<?php
+        			include "dashboard.php";
+        			?>
+			<?php
+        		elseif(!isset($_GET['page'])):
+        			include "frontpage.php";
+        		else:
+        		
+        		echo $loginmessage;
+        		?>
+        		                <?php
+        		                if(isset($_GET['subscribe'])){
+        		                	include "subscribe.php";
+        		                }
+        		            if(isset($_GET['page'])) //looking at a page
+        		            {
+        		                $page = $_GET['page'];
+        		                include"$page.php";
+        		                
+        		            }else //looking at main index
+        		            {
+        		                
+        		            }
+        		            ?>  
+        		            
+        		            <?php
+        		endif;
+        		?>
     <footer>
       <div class="container">
 
@@ -268,44 +160,6 @@ header("location: dashboard.php");
       </div>
 
     </footer>
-        <div class="modal fade" id="modal-form">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body wrapper-lg">
-          <div class="row">
-            <div class="col-sm-6 b-r">
-              <h3 class="m-t-none m-b">Sign in</h3>
-              <p>Sign in to meet your friends.</p>
-              <form role="form">
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" class="form-control" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
-                </div>
-                <div class="checkbox m-t-lg">
-                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
-                  <label>
-                    <input type="checkbox"> Remember me
-                  </label>
-                </div>
-              </form>
-            </div>
-            <div class="col-sm-6">
-              <h4>Not a member?</h4>
-              <p>You can create an account <a href="#" class="text-info">here</a></p>
-              <p>OR</p>
-              <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
-              <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
-              <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google-plus pull-left"></i>Sign in with Google+</a>
-            </div>
-          </div>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div>
 
 
     <!-- Javascript
@@ -331,7 +185,7 @@ header("location: dashboard.php");
             <div class="col-sm-6 b-r">
               <h3 class="m-t-none m-b">Sign in</h3>
               <p>Sign in to meet your friends.</p>
-              <form role="form" action="" method="post">
+              <form role="form" method="post">
                 <div class="form-group">
                   <label>Email</label>
                   <input type="email" class="form-control" placeholder="Enter email">
@@ -341,17 +195,16 @@ header("location: dashboard.php");
                   <input type="password" class="form-control" placeholder="Password">
                 </div>
                 <div class="checkbox m-t-lg">
-                  <button type="submit"  value=" Login "><strong>Log in</strong></button>
+                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
                   <label>
                     <input type="checkbox"> Remember me
                   </label>
                 </div>
-                <span><?php echo $error; ?></span>
               </form>
             </div>
             <div class="col-sm-6">
               <h4>Not a member?</h4>
-              <p>You can create an account <a href="#" class="text-info">here</a></p>
+              <p>You can create an account <a href="?page=member&signup" class="text-info">here</a></p>
               <p>OR</p>
               <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
               <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
@@ -380,7 +233,77 @@ header("location: dashboard.php");
   <script src="js/app.plugin.js"></script>
   <script type="text/javascript" src="js/jPlayer/jquery.jplayer.min.js"></script>
   <script type="text/javascript" src="js/jPlayer/add-on/jplayer.playlist.min.js"></script>
-  <script type="text/javascript" src="js/jPlayer/demo.js"></script
+  <script type="text/javascript" src="js/jPlayer/demo.js"></script>
+  
+  
+  <script type="text/javascript"> 
+$("input[type=password]").keyup(function(){
+    var ucase = new RegExp("[A-Z]+");
+	var lcase = new RegExp("[a-z]+");
+	var num = new RegExp("[0-9]+");
+	var spchar = new RegExp("[@#$%]+");
+	
+	if($("#password1").val().length >= 8){
+		$("#8char").removeClass("fa-times");
+		$("#8char").addClass("fa-check");
+		$("#8char").css("color","#00A41E");
+	}else{
+		$("#8char").removeClass("fa-check");
+		$("#8char").addClass("fa-times");
+		$("#8char").css("color","#FF0004");
+	}
+	
+	if(ucase.test($("#password1").val())){
+		$("#ucase").removeClass("fa-times");
+		$("#ucase").addClass("fa-check");
+		$("#ucase").css("color","#00A41E");
+	}else{
+		$("#ucase").removeClass("fa-check");
+		$("#ucase").addClass("fa-times");
+		$("#ucase").css("color","#FF0004");
+	}
+
+	if(spchar.test($("#password1").val())){
+		$("#spchar").removeClass("fa-times");
+		$("#spchar").addClass("fa-check");
+		$("#spchar").css("color","#00A41E");
+	}else{
+		$("#spchar").removeClass("fa-check");
+		$("#spchar").addClass("fa-times");
+		$("#spchar").css("color","#FF0004");
+	}
+	
+	if(lcase.test($("#password1").val())){
+		$("#lcase").removeClass("fa-times");
+		$("#lcase").addClass("fa-check");
+		$("#lcase").css("color","#00A41E");
+	}else{
+		$("#lcase").removeClass("fa-check");
+		$("#lcase").addClass("fa-times");
+		$("#lcase").css("color","#FF0004");
+	}
+	
+	if(num.test($("#password1").val())){
+		$("#num").removeClass("fa-times");
+		$("#num").addClass("fa-check");
+		$("#num").css("color","#00A41E");
+	}else{
+		$("#num").removeClass("fa-check");
+		$("#num").addClass("fa-times");
+		$("#num").css("color","#FF0004");
+	}
+	
+	if($("#password1").val() == $("#password2").val()){
+		$("#pwmatch").removeClass("fa-times");
+		$("#pwmatch").addClass("fa-check");
+		$("#pwmatch").css("color","#00A41E");
+	}else{
+		$("#pwmatch").removeClass("fa-check");
+		$("#pwmatch").addClass("fa-times");
+		$("#pwmatch").css("color","#FF0004");
+	}
+});
+</script> 
 
 
     </body>
