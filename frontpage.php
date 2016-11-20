@@ -10,6 +10,7 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
           <div class="col-xs-6 signin text-right navbar-nav">
             <a href="#about" class="scroll">About</a> &nbsp;&nbsp;
             <a href="./forum" class="scroll">Forum</a> &nbsp;&nbsp;
+            <a href="./events/" class="scroll">Events</a> &nbsp;&nbsp;
             <a href="./jobs" class="scroll">Jobs</a> &nbsp;&nbsp;
             <a href="#modal-form" data-toggle="modal">Sign in</a>
           </div>
@@ -43,13 +44,22 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <div class="container">
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 text-center margin-30 wow fadeIn" data-wow-delay="0.6s">
-<h2>Be the first</h2>
-<p class="lead">Lorem ipsum dolor sit amet, consectetur adipis.</p>
+<h2>About Us</h2>
+<p class="lead">We're an awesome community that loves to code.</p>
+</div>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+    <div class="row">
+      <div class="col-xs-12 text-center wow fadeInUp" data-wow-delay="1s">
+        <a href="#about" class="btn btn-secondary btn-lg scroll">Curious? Check Us Out!</a>
+      </div>
+    </div><!--End Button Row-->
+  </div>
 </div>
 </div>
 
 <div class="iphone wow fadeInUp" data-wow-delay="1s">
-<img src="img/iphone.png">
+<img src="img/iScreen.png">
 </div>
 </div>
 </section>
@@ -59,17 +69,17 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <div class="row">
 <div class="col-sm-4 wow fadeIn" data-wow-delay="0.4s">
 <hr class="line purple">
-<h3>App Feature One Here</h3>
+<h3>Learn How to Code</h3>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
 </div>
 <div class="col-sm-4 wow fadeIn" data-wow-delay="0.8s">
 <hr  class="line blue">
-<h3>App Feature One Here</h3>
+<h3>Share Coding Experiences</h3>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
 </div>
 <div class="col-sm-4 wow fadeIn" data-wow-delay="1.2s">
 <hr  class="line yellow">
-<h3>App Feature One Here</h3>
+<h3>Meet Cool Folks who love code</h3>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
 </div>
 </div>
@@ -78,7 +88,7 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 
 
 <!--Pricing-->
-<section id="pricing" class="pad-lg">
+<!-- <section id="pricing" class="pad-lg">
 <div class="container">
 <div class="row margin-40">
 <div class="col-sm-8 col-sm-offset-2 text-center">
@@ -131,7 +141,7 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 </div>
 
 </div>
-</section>
+</section> -->
 
 
 <section id="invite" class="pad-lg light-gray-bg">
@@ -139,9 +149,9 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <div class="row">
 <div class="col-sm-8 col-sm-offset-2 text-center">
 <i class="fa fa-envelope-o margin-40"></i>
-<h2 class="black">Get the invite</h2>
+<h2 class="black">Sign Up for Our Newsletter</h2>
 <br />
-<p class="black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.</p>
+<p class="black">Get up to speed with the latest developments at Agora Code Community. No Spam, We Promise!</p>
 <br />
 
 <div class="row">
@@ -150,7 +160,7 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <div class="form-group">
 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email">
 </div>
-<button type="submit" class="btn btn-primary btn-lg">Request Invite</button>
+<button type="submit" class="btn btn-primary btn-lg">Sign Up Now! </button>
 </form>
 </div>
 </div><!--End Form row-->

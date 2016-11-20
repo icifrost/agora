@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 // Start a session
 define("IS_INCLUDED", true);// Defines the variable that controls direct
@@ -48,7 +48,7 @@ if(isset($_SESSION['member'])){
 
   <!-- Styles -->
   <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900|Montserrat:400,700' rel='stylesheet' type='text/css'>
-  
+
   <link rel="stylesheet" type="text/css" media="screen, projection" href="style.css" />
   <link rel="icon" type="image/gif" href="favicon.png" />
   <link rel="stylesheet" href="js/jPlayer/jplayer.flat.css" type="text/css" />
@@ -57,24 +57,24 @@ if(isset($_SESSION['member'])){
   <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
   <link rel="stylesheet" href="css/font.css" type="text/css" />
-  <link rel="stylesheet" href="css/app.css" type="text/css" />  
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
     <link rel="stylesheet" href="js/datepicker/datepicker.css" type="text/css" />
 <link rel="stylesheet" href="js/slider/slider.css" type="text/css" />
 <link rel="stylesheet" href="js/chosen/chosen.css" type="text/css" />
-<link rel="stylesheet" href="js/datatables/datatables.css" type="text/css"/> 
+<link rel="stylesheet" href="js/datatables/datatables.css" type="text/css"/>
 
 
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  
-  <?php 
+
+  <?php
   if(!isset($_GET['page']) && !isset($_SESSION['member'])){
   	echo '<link rel="stylesheet" href="css/main.css">';
   }
   ?>
 
   <script src="js/modernizr-2.7.1.js"></script>
-  
-  <script src="js/jquery.min.js"></script>  
+
+  <script src="js/jquery.min.js"></script>
 
 </head>
 
@@ -93,8 +93,8 @@ if(isset($_SESSION['member'])){
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about" class="scroll">About</a></li>
             <li><a href="?page=forum/index">Forum</a></li>
-            <li><a href="?page=events">Events</a></li>
-            <li><a href="?page=jobs">Jobs</a></li> 
+            <li><a href="./events/">Events</a></li>
+            <li><a href="?page=jobs">Jobs</a></li>
             <?php if(isset($_SESSION['member'])){
             	$user=$_SESSION['member'];
             	$getuser="SELECT * from account, client where account.account_id='$user' and account.account_id = client.account_id";
@@ -103,16 +103,16 @@ if(isset($_SESSION['member'])){
             	$username = $getuser3['username'];
             	$fullname = $getuser3['first_name'].' '.$getuser3['last_name'];
             	$regDate = date('Y-m-d H:i:s', $getuser3['registration_date']);
-            	
+
             	$email = $getuser3['email'];
-            	
+
             	$oldDate = new DateTime($regDate);
-            	
+
             	$curDate = mktime(Date('H'),Date('i'),Date('s'),Date('m'),Date('d'),Date('Y'));
             	$curDate = new DateTime(date('Y-m-d H:i:s', $curDate));
-            	
+
             	$difference = $oldDate->diff($curDate);
-            	
+
             	$timePassed = $difference->y.' years, '.$difference->m.' months, '.$difference->d.' days';
             	?>
             	<li>
@@ -131,7 +131,7 @@ if(isset($_SESSION['member'])){
                 <b>SUPPORT PIN: &emsp;&emsp;</b><?php echo ""; ?></p>
 
                     <hr/>
-                    
+
 <a style="color: gray;" href="?page=dashboard&username=<?php echo $user; ?>">Dashboard</a><br/>
 <a style="color: gray;" href="?page=profile/personal_info">Profile</a><br/>
 <a style="color: gray;" href="?logout"><i class="fa fa-sign-out"></i> Logout</a><br/>
@@ -147,14 +147,14 @@ if(isset($_SESSION['member'])){
             	<li><a href="#modal-form" data-toggle="modal">Sign in</a></li>
             	<?php
             }
-            	
+
             	?>
-            
+
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-    
+
 
     <div class="mouse-icon hidden-xs">
 				<div class="scroll"></div>
@@ -169,7 +169,7 @@ if(isset($_SESSION['member'])){
         		elseif(!isset($_GET['page']) && !isset($_SESSION['member'])):
         			include "frontpage.php";
         		else:
-        		
+
         		echo $loginmessage;
         		?>
         		                <?php
@@ -180,13 +180,13 @@ if(isset($_SESSION['member'])){
         		            {
         		                $page = $_GET['page'];
         		                include"$page.php";
-        		                
+
         		            }else //looking at main index
         		            {
-        		                
+
         		            }
-        		            ?>  
-        		            
+        		            ?>
+
         		            <?php
         		endif;
         		?>
@@ -266,11 +266,11 @@ if(isset($_SESSION['member'])){
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div>
-  
+
   <!-- parsley -->
 <script src="js/parsley/parsley.min.js"></script>
 <script src="js/parsley/parsley.extend.js"></script>
-  
+
   <!-- datepicker -->
   <script src="js/datepicker/bootstrap-datepicker.js"></script>
   <!-- slider -->
@@ -290,15 +290,15 @@ if(isset($_SESSION['member'])){
   <script type="text/javascript" src="js/jPlayer/jquery.jplayer.min.js"></script>
   <script type="text/javascript" src="js/jPlayer/add-on/jplayer.playlist.min.js"></script>
   <script type="text/javascript" src="js/jPlayer/demo.js"></script>
-  
-  
-  <script type="text/javascript"> 
+
+
+  <script type="text/javascript">
 $("input[type=password]").keyup(function(){
     var ucase = new RegExp("[A-Z]+");
 	var lcase = new RegExp("[a-z]+");
 	var num = new RegExp("[0-9]+");
 	var spchar = new RegExp("[@#$%]+");
-	
+
 	if($("#password1").val().length >= 8){
 		$("#8char").removeClass("fa-times");
 		$("#8char").addClass("fa-check");
@@ -308,7 +308,7 @@ $("input[type=password]").keyup(function(){
 		$("#8char").addClass("fa-times");
 		$("#8char").css("color","#FF0004");
 	}
-	
+
 	if(ucase.test($("#password1").val())){
 		$("#ucase").removeClass("fa-times");
 		$("#ucase").addClass("fa-check");
@@ -328,7 +328,7 @@ $("input[type=password]").keyup(function(){
 		$("#spchar").addClass("fa-times");
 		$("#spchar").css("color","#FF0004");
 	}
-	
+
 	if(lcase.test($("#password1").val())){
 		$("#lcase").removeClass("fa-times");
 		$("#lcase").addClass("fa-check");
@@ -338,7 +338,7 @@ $("input[type=password]").keyup(function(){
 		$("#lcase").addClass("fa-times");
 		$("#lcase").css("color","#FF0004");
 	}
-	
+
 	if(num.test($("#password1").val())){
 		$("#num").removeClass("fa-times");
 		$("#num").addClass("fa-check");
@@ -348,7 +348,7 @@ $("input[type=password]").keyup(function(){
 		$("#num").addClass("fa-times");
 		$("#num").css("color","#FF0004");
 	}
-	
+
 	if($("#password1").val() == $("#password2").val()){
 		$("#pwmatch").removeClass("fa-times");
 		$("#pwmatch").addClass("fa-check");
@@ -359,7 +359,7 @@ $("input[type=password]").keyup(function(){
 		$("#pwmatch").css("color","#FF0004");
 	}
 });
-</script> 
+</script>
 
 
     </body>
