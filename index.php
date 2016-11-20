@@ -204,11 +204,55 @@ if(isset($_SESSION['member'])){
             </div>
             <div class="col-sm-6">
               <h4>Not a member?</h4>
-              <p>You can create an account <a href="?page=member&signup" class="text-info">here</a></p>
+              <p>You can create an account <a href="#model-reg-form" class="text-info">here</a></p>
               <p>OR</p>
               <a href="#" class="btn btn-primary btn-block m-b-sm"><i class="fa fa-facebook pull-left"></i>Sign in with Facebook</a>
               <a href="#" class="btn btn-info btn-block m-b-sm"><i class="fa fa-twitter pull-left"></i>Sign in with Twitter</a>
               <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google-plus pull-left"></i>Sign in with Google+</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+  <!--regitration form -->
+  <script src="js/slimscroll/jquery.slimscroll.min.js"></script>
+    <div class="modal fade" id="model-reg-form">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body wrapper-lg">
+          <div class="row">
+            <div class="col-sm-6 b-r">
+              <h3 class="m-t-none m-b">Sign up</h3>
+              <p>Sign up to meet your friends.</p>
+              <form role="form" method="post">
+              <div class="form-group">
+                  <label>First-Name</label>
+                  <input type="text" class="form-control" placeholder="Your first name">
+                </div>
+                <div class="form-group">
+                <label>Second-Name</label>
+                  <input type="text" class="form-control" placeholder="Your second name">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                  <label>Confim-Password</label>
+                  <input type="password" class="form-control" placeholder="Confirm-Password">
+                </div>
+                <div class="checkbox m-t-lg">
+                  <button type="submit" class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Submit</strong></button>
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>
+              </form>
             </div>
           </div>
         </div>
