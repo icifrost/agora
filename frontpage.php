@@ -98,17 +98,22 @@ $(document).ready(function() {
 <div class="col-sm-4 wow fadeIn" data-wow-delay="0.4s">
 <hr class="line purple">
 <h3>Learn How to Code</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
+<p>Be it experts, Newbies, Enthusiasts... The community provides the best environment 
+for collaborations, networking, sharing ideas and having fun while coding.</p>
 </div>
 <div class="col-sm-4 wow fadeIn" data-wow-delay="0.8s">
 <hr  class="line blue">
 <h3>Share Coding Experiences</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
+<p>Show off those codes that took you an entire night to get it right. 
+There is so much you can learn from other communty members. 
+Have fun sharing those coding experiences.</p>
 </div>
 <div class="col-sm-4 wow fadeIn" data-wow-delay="1.2s">
 <hr  class="line yellow">
 <h3>Meet Cool Folks who love code</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut est facilisis, eu elementum mi volutpat. Pellentesque ac tristique nisi.</p>
+<p>Meet people who love code as much as you do and network. 
+The community provides a good opportunity and environment for leaning.
+ Be inspired by fellow coders.</p>
 </div>
 </div>
 </div>
@@ -153,10 +158,10 @@ $(document).ready(function() {
 
 <div class="row margin-30 news-container">
 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 wow fadeInLeft" data-wow-delay="0.8s">
-<a href="#" target="_blank">
-<img class="news-img pull-left" src="img/press-01.jpg" alt="Tech Crunch">
-<p class="black">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.<br />
-<small><em>Tech Crunch - January 15, 2015</em></small></p>
+<a href="http://fb.me/5iuyMAD5y" target="_blank">
+<img class="news-img pull-left" src="img/gpz_logo.jpg" width="150px" height="80px" alt="Global Platform Zambia"/>
+<p class="black">We have really enjoyed hosting Agora Code Community this weekend. Look forward to seeing you again soon.<br />
+<small><em>Golbal Plaftorm Zambia - November 21, 2016</em></small></p>
 </a>
 </div>
 </div>
