@@ -1,6 +1,42 @@
 <?php
 if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 ?>
+<script language="javascript">
+$(document).ready(function() {
+	
+	var loading;
+	var results;
+	
+	form = document.getElementById('form');
+	loading = document.getElementById('loading');
+	results = document.getElementById('results');
+	
+	$('#Submit').click( function() {
+		
+		if($('#email').val() == "")
+		{
+			$('#results').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">x</button><strong>Oops!</strong> Please Enter Your Email Address.</div>');
+
+			return false;
+			}
+		
+		results.style.display = 'none';
+		$('#results').html('');
+		loading.style.display = 'inline';
+		
+		$.post('subscribe.php?email=' + escape($('#email').val()),{
+		}, function(response){
+			
+			results.style.display = 'block';
+			$('#results').html(unescape(response));	
+			loading.style.display = 'none';
+		});
+		
+		return false;
+	});
+	
+});
+</script>
 <header class="header">
       <div class="container">
         <div class="row">
@@ -9,9 +45,9 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
           </div>
           <div class="col-xs-6 signin text-right navbar-nav">
             <a href="#about" class="scroll">About</a> &nbsp;&nbsp;
-            <a href="./forum" class="scroll">Forum</a> &nbsp;&nbsp;
-            <a href="./events/" class="scroll">Events</a> &nbsp;&nbsp;
-            <a href="./jobs" class="scroll">Jobs</a> &nbsp;&nbsp;
+            <a href="?page=forum/index">Forum</a> &nbsp;&nbsp;
+            <a href="?page=events">Events</a> &nbsp;&nbsp;
+            <a href="?page=jobs">Jobs</a> &nbsp;&nbsp;
             <a href="#modal-form" data-toggle="modal">Sign in</a>
           </div>
         </div>
@@ -30,7 +66,7 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
                     <a href="#about" class="btn btn-secondary btn-lg scroll">Learn More</a>
                   </div>
                   <div class="col-xs-6 text-left wow fadeInUp" data-wow-delay="1.4s">
-                    <a href="#invite" class="btn btn-primary btn-lg scroll">Request Invite</a>
+                    <a href="#invite" class="btn btn-primary btn-lg scroll">Subscribe</a>
                   </div>
                 </div><!--End Button Row-->
               </div>
@@ -47,20 +83,12 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <h2>About Us</h2>
 <p class="lead">We're an awesome community that loves to code.</p>
 </div>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-    <div class="row">
-      <div class="col-xs-12 text-center wow fadeInUp" data-wow-delay="1s">
-        <a href="#about" class="btn btn-secondary btn-lg scroll">Curious? Check Us Out!</a>
-      </div>
-    </div><!--End Button Row-->
-  </div>
-</div>
 </div>
 
 <div class="iphone wow fadeInUp" data-wow-delay="1s">
 <img src="img/iScreen.png">
 </div>
+
 </div>
 </section>
 
@@ -87,63 +115,6 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 </section>
 
 
-<!--Pricing-->
-<!-- <section id="pricing" class="pad-lg">
-<div class="container">
-<div class="row margin-40">
-<div class="col-sm-8 col-sm-offset-2 text-center">
-<h2 class="white">Pricing</h2>
-<p class="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam viverra orci ut.</p>
-</div>
-</div>
-
-<div class="row margin-50">
-
-<div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="1s">
-<br />
-<ul class="list-unstyled pricing-table text-center">
-<li class="headline"><h5 class="white">Personal</h5></li>
-<li class="price"><div class="amount">$5<small>/m</small></div></li>
-<li class="info">2 row section for you package information. You can include all details or icons</li>
-<li class="features first">Up To 25 Projects</li>
-<li class="features">10GB Storage</li>
-<li class="features">Other info</li>
-<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-</ul>
-</div>
-
-<div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="0.4s">
-<ul class="list-unstyled pricing-table active text-center">
-<li class="headline"><h5 class="white">Professional</h5></li>
-<li class="price"><div class="amount">$12<small>/m</small></div></li>
-<li class="info">2 row section for you package information. You can include all details or icons</li>
-<li class="features first">Up To 25 Projects</li>
-<li class="features">10GB Storage</li>
-<li class="features">Other info</li>
-<li class="features">Other info</li>
-<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-</ul>
-</div>
-
-<div class="col-sm-4 pricing-container wow fadeInUp" data-wow-delay="1.3s">
-<br />
-<ul class="list-unstyled pricing-table text-center">
-<li class="headline"><h5 class="white">Business</h5></li>
-<li class="price"><div class="amount">$24<small>/m</small></div></li>
-<li class="info">2 row section for you package information. You can include all details or icons</li>
-<li class="features first">Up To 25 Projects</li>
-<li class="features">10GB Storage</li>
-<li class="features">Other info</li>
-<li class="features last btn btn-secondary btn-wide"><a href="#">Get Started</a></li>
-</ul>
-</div>
-
-</div>
-
-</div>
-</section> -->
-
-
 <section id="invite" class="pad-lg light-gray-bg">
 <div class="container">
 <div class="row">
@@ -155,15 +126,21 @@ if(!defined("IS_INCLUDED")){header("Location:unauthorised_error.php");}
 <br />
 
 <div class="row">
-<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-<form role="form">
-<div class="form-group">
-<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Email">
+              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+              
+              <div id="loading" style="display:none;"><img src="img/load.gif"/></div>
+<div id="results">
+
 </div>
-<button type="submit" class="btn btn-primary btn-lg">Sign Up Now! </button>
-</form>
-</div>
-</div><!--End Form row-->
+              
+                <form action="index.php?subscribe" method="post" data-validate="parsley" id="subscribe" role="form">
+                  <div class="form-group">
+                    <input class="form-control input-lg" id="email" name="email" type="text" value=""  data-type="email" data-required="true" id="exampleInputEmail1" placeholder="Enter email"/>
+                  </div>
+                  <button type="submit" id="Submit" class="btn btn-s-sm btn-primary btn-lg">Subscribe</button>
+                </form>
+              </div>
+            </div>
 
 </div>
 </div>
