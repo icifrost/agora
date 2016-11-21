@@ -1,5 +1,5 @@
 <?php
-if(!defined("STAFF_IS_INCLUDED")){header("Location:unauthorised_error.php");}
+if(!defined("ADMIN_IS_INCLUDED")){header("Location:unauthorised_error.php");}
 ?>
 <div class="col-sm-6">
       	                  <section class="panel panel-default">
@@ -18,7 +18,7 @@ if ($userStatus >= 3)
       $permissionpost=$_POST['permissionpost'];
       $permissionreply=$_POST['permissionreply'];
       $insertforum="INSERT into forum_forums(name, description, parent_id, sort, permission_min, permission_post, permission_reply) values('$forumname', '$description','$parent','$sort','$permission','$permissionpost','$permissionreply')";
-      pg_query($dbconn, $insertforum) or die ("Could not insert forum");
+      mysqli_query($dbconn, $insertforum) or die ("Could not insert forum");
       ?>
                                   <div class="alert alert-success">
                                               <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -27,13 +27,13 @@ if ($userStatus >= 3)
                                             </div>
                                   <?php
     }
-      print "<form action='?page=forum/addforum' method='post'>Type name of forum to add:<br>";
+      print "<form action='?page=addforum' method='post'>Type name of forum to add:<br>";
       print "<input type='text' name='forumname' length='15'><br><br>";
       print "What category?<br><br>";
       $getcats="SELECT * from forum_categories order by cat_sort ASC";
-      $getcats2=pg_query($dbconn, $getcats) or die("Could not get categories");
+      $getcats2=mysqli_query($dbconn, $getcats) or die("Could not get categories");
       print "<select name='parent'>";
-      while($getcats3=pg_fetch_array($getcats2))
+      while($getcats3=mysqli_fetch_array($getcats2))
       {
         print "<option value='$getcats3[category_id]'>$getcats3[category_name]</option><br>";
       }

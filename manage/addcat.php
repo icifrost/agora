@@ -1,5 +1,5 @@
 <?php
-if(!defined("STAFF_IS_INCLUDED")){header("Location:unauthorised_error.php");}
+if(!defined("ADMIN_IS_INCLUDED")){header("Location:unauthorised_error.php");}
 ?>
 <div class="col-sm-6">
       	                  <section class="panel panel-default">
@@ -13,7 +13,7 @@ if ($userStatus >= "3")
         $sort=$_POST['sort'];
         $catname=$_POST['catname'];
         $addcategory="INSERT into forum_categories (category_name, cat_sort) values('$catname','$sort')";
-        pg_query($dbconn, $addcategory) or die("Could not add categories");
+        mysqli_query($dbconn, $addcategory) or die("Could not add categories");
         ?>
         <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -26,7 +26,7 @@ if ($userStatus >= "3")
       	
       	?>
       	   	
-      	                      <form role="form" action="?page=forum/addcat" method="post" data-validate="parsley">
+      	                      <form role="form" action="?page=addcat" method="post" data-validate="parsley">
       	                        <div class="form-group">
       	                          <label>Type name of category to add:</label>
       	                          <input type="text" class="form-control" placeholder="Enter Name of Category" name="catname" length="15" data-required="true">

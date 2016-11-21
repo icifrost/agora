@@ -24,23 +24,37 @@ if(isset($_GET['status'])){
 	}
 }
 ?>
-<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
-<div class="container aside-xl">
-<a class="navbar-brand block" href="index.html"><span class="h1 font-bold">Agora Code Community</span></a>
-<section class="m-b-lg">
-<header class="wrapper text-center">
-<strong>Administrator sign in</strong>
-</header>
-<form action="index.php" method="post">
-          <div class="form-group">
-            <input type="username" name="username" placeholder="Username" class="form-control rounded input-lg text-center no-border">
+
+ <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body wrapper-lg">
+          <div class="row">
+            <div class="col-sm-6 b-r">
+              <h3 class="m-t-none m-b">Sign in</h3>
+              <p>Sign in to meet your friends.</p>
+              <form action='index.php' role="form" method="post">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type='text' name='username' class="form-control" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" placeholder="Password" name='password' value=''>
+                </div>
+                <div class="checkbox m-t-lg">
+                  <button type="submit" name='login' class="btn btn-sm btn-success pull-right text-uc m-t-n-xs"><strong>Log in</strong></button>
+                  <label>
+                    <input type="checkbox"> Remember me
+                  </label>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-6">
+              <h3>Agora Code Community</h3>
+              <h5>Adminitrator Login</h5>
+              <span class="fa fa-unlock-alt fa-5x"></span>
+            </div>
           </div>
-          <div class="form-group">
-             <input type="password" name="password" placeholder="Password" class="form-control rounded input-lg text-center no-border">
-          </div>
-          <button type="submit" name="login" class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded"><i class="icon-arrow-right pull-right"></i><span class="m-r-n-lg">Sign in</span></button>
-          <div class="text-center m-t m-b"><a href="#"><small>Forgot password?</small></a></div>
-        </form>
-</section>
-</div>
-</section>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
